@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: Tool API
+  description: An API for incident response tool servers
+  version: 1.0.0
+paths:
+  /tools:
+    get:
+      operationId: getTools
+      summary: Get a list of tools
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: A list of tools
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolsList'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+  /tool/{tool_id}:
+    post:
+      operationId: callTool
+      summary: Query a specific tool
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: tool_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The ID of the tool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToolCallPayload'
+        x-codegen-request-body-name: body
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToolCallResult'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Tool not found
+
+components:
+  schemas:
+    Tool:
+      type: object
+      properties:
+        tool_id:
+          type: string
+          description: Unique identifier for the tool.
+        description:
+          type: string
+          description: Detailed description of the tool and expected input format.
+        human_short_title:
+          type: string
+          description: A short, human-readable title for the tool.
+        human_description:
+          type: string
+          description: A human-readable description of the tool.
+    ToolsList:
+      type: object
+      properties:
+        tools:
+          type: array
+          items:
+            $ref: '#/components/schemas/Tool'
+      additionalProperties: true
+    ToolCallResult:
+      type: object
+      properties:
+        result:
+          type: object
+          description: Arbitrary JSON result from the tool.
+      additionalProperties: true
+    ToolCallPayload:
+      type: object
+      additionalProperties: true
+      description: Arbitrary JSON blob sent to the tool.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Token
