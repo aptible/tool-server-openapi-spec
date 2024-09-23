@@ -45,7 +45,7 @@ def get_tools():
         [
             Tool(
                 tool_id="hello_world",
-                description="Returns the string \"Hello, World!\" when you pass JSON input { \"name\": \"World!\" }."
+                description="Returns the string \"Hello, World!\" when you pass JSON input { \"name\": \"World\" }."
                             "Pass a different name for a different greeting.",
                 human_short_title="Hello World Generator",
                 human_description="Generate a personalized greeting by passing a JSON object with a \"name\" key."
@@ -73,7 +73,7 @@ $ curl http://localhost:8080/tools -H "Authorization: Bearer ${TOOL_SERVER_TOKEN
 {
   "tools": [
     {
-      "description": "Returns the string \"Hello, World!\" when you pass JSON input { \"name\": \"World!\" }. Pass a different name for a different greeting.",
+      "description": "Returns the string \"Hello, World!\" when you pass JSON input { \"name\": \"World\" }. Pass a different name for a different greeting.",
       "human_description": "Generate a personalized greeting by passing a JSON object with a \"name\" key.",
       "human_short_title": "Hello World Generator",
       "tool_id": "hello_world"
