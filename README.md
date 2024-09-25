@@ -60,7 +60,7 @@ and the `call_tool` function:
 def call_tool(tool_id, body):
     if tool_id == "hello_world":
         name = body['name']
-        return ToolCallResult(f"Hello, {name}!")
+        return ToolCallResult({"response": f"Hello, {name}!"})
     else:
         raise NotFound(f"No tool registered with ID {tool_id}")
 ```
@@ -85,7 +85,9 @@ $ curl http://localhost:8080/tools -H "Authorization: Bearer ${TOOL_SERVER_TOKEN
 ```bash
 $ curl -X POST http://localhost:8080/tool/hello_world -H "Authorization: Bearer ${TOOL_SERVER_TOKEN}" -H "Content-Type: application/json" -d '{"name": "World"}'
 {
-  "result": "Hello, World!"
+  "result": {
+    "response": "Hello, World!"
+  }
 }
 ```
 
