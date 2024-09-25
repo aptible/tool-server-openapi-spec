@@ -40,6 +40,9 @@ def info_from_bearerAuth(token):
 Next, edit `openapi_server/controllers/security_controller.py` to add an implementation of the `get_tools` function:
 
 ```python
+from openapi_server.models.tool import Tool
+from openapi_server.models.tools_list import ToolsList
+
 def get_tools():
     return ToolsList(
         [
@@ -57,10 +60,12 @@ def get_tools():
 and the `call_tool` function:
 
 ```python
+from openapi_server.models.tool_call_result import ToolCallResult
+
 def call_tool(tool_id, body):
     if tool_id == "hello_world":
         name = body['name']
-        return ToolCallResult({"response": f"Hello, {name}!"})
+        return ToolCallResult({"summary": f"Hello, {name}!"})
     else:
         raise NotFound(f"No tool registered with ID {tool_id}")
 ```
@@ -86,7 +91,7 @@ $ curl http://localhost:8080/tools -H "Authorization: Bearer ${TOOL_SERVER_TOKEN
 $ curl -X POST http://localhost:8080/tool/hello_world -H "Authorization: Bearer ${TOOL_SERVER_TOKEN}" -H "Content-Type: application/json" -d '{"name": "World"}'
 {
   "result": {
-    "response": "Hello, World!"
+    "summary": "Hello, World!"
   }
 }
 ```
