@@ -56,6 +56,11 @@ components:
   schemas:
     Tool:
       type: object
+      required:
+        - tool_id
+        - description
+        - human_short_title
+        - human_description
       properties:
         tool_id:
           type: string
@@ -79,10 +84,18 @@ components:
       additionalProperties: true
     ToolCallResult:
       type: object
+      required:
+        - result
       properties:
         result:
           type: object
           description: Arbitrary JSON result from the tool.
+          required:
+            - summary
+          properties:
+            summary:
+              type: string
+              description: A summary of the tool call result.
           additionalProperties: true
       additionalProperties: true
     ToolCallPayload:
