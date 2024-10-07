@@ -6,7 +6,7 @@ The specs in this repository can generate conformant scaffolding for a tool serv
 ## Getting Started
 
 Install [`openapi-generator`](https://github.com/OpenAPITools/openapi-generator?tab=readme-ov-file#1---installation)
-and choose a language/framework from the list of
+(or use the pre-built Docker image to avoid installing system dependencies) and choose a language/framework from the list of
 [supported OpenAPI server stubs](https://github.com/OpenAPITools/openapi-generator?tab=readme-ov-file#overview).
 
 For the rest of this example, we'll assume Python with the Flask framework for concreteness and
@@ -19,6 +19,16 @@ First, in a directory where you want to implement the server, generate the scaff
 openapi-generator generate \
 -i https://raw.githubusercontent.com/aptible/tool-server-openapi-spec/main/1.0.0/tool-server.yaml \
 -g python-flask
+```
+
+Or, using the the pre-built openapi-generator Docker image:
+
+```bash
+docker run --rm \
+  -v ${PWD}:/local openapitools/openapi-generator-cli generate \
+  -i https://raw.githubusercontent.com/aptible/tool-server-openapi-spec/main/1.0.0/tool-server.yaml \
+  -g python-flask \
+  -o /local
 ```
 
 You now need to fill in the implementation of the controllers. First, edit `openapi_server/controllers/security_controller.py`
